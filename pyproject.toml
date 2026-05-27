@@ -1,0 +1,18 @@
+[project]
+name = "lin"
+version = "0.0.1"
+description = "LIN — piloto de social listening sobre la manosfera (Plural + Camino)"
+requires-python = ">=3.11"
+dependencies = [
+    "apify-client>=1.8",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "pandas>=2.2",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

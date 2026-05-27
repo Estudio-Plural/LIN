@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+data/raw/
+data/processed/
+*.log
+
+# Material del cliente (no público) — disponible localmente en brief/
+brief/

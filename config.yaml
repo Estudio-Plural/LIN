@@ -1,0 +1,48 @@
+window:
+  start: 2026-05-18
+  end: 2026-05-27
+
+limits:
+  tiktok_posts_per_keyword: 50
+  reddit_posts_per_keyword: 30
+  reddit_posts_per_subreddit: 50
+  reddit_comments_per_post: 20
+
+keywords:
+  identitarias:
+    - manosfera
+    - manosphere
+    - red pill
+    - pildora roja
+    - hombre alfa
+    - alpha male
+    - hombre de alto valor
+    - high value man
+
+  emocionales:
+    - friendzone
+    - hipergamia
+    - hypergamy
+    - crisis de masculinidad
+
+  esteticas:
+    - looksmaxxing
+    - gymcel
+    - mewing
+    - sigma grindset
+    - monk mode
+
+  gamer:
+    - simp
+    - soyboy
+    - e-girl
+
+subreddits:
+  - MensRights
+  - NoFap
+  - LooksmaxingAdvice
+  - ForeverAlone
+  - AskMen
+  - Gaming
+  - KotakuInAction
+  - TrueUnpopularOpinion
