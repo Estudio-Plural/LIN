@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: lin
+Version: 0.0.1
+Summary: LIN — piloto de social listening sobre la manosfera (Plural + Camino)
+Requires-Python: >=3.11
+Requires-Dist: apify-client>=1.8
+Requires-Dist: python-dotenv>=1.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: pandas>=2.2
+Requires-Dist: requests>=2.31
+Requires-Dist: networkx>=3.2
+Requires-Dist: matplotlib>=3.8
+Requires-Dist: jinja2>=3.1
+Requires-Dist: weasyprint>=60

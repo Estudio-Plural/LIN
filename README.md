@@ -1,8 +1,22 @@
 # LIN — Piloto de Social Listening
 
-Piloto exploratorio de escucha digital sobre la conversación de la manosfera en redes sociales (TikTok y Reddit), desarrollado por [Estudio Plural](https://estudio-plural.co) en colaboración con [Camino](https://www.somoscamino.co) para una propuesta al Banco Mundial.
+Piloto exploratorio de escucha digital sobre la conversación de la manosfera en redes sociales (TikTok, Reddit y YouTube), desarrollado por [Estudio Plural](https://estudio-plural.co) en colaboración con [Camino](https://www.somoscamino.co) para una propuesta al Banco Mundial.
 
 El piloto captura contenido público sobre keywords y comunidades específicas vinculadas al fenómeno, filtra por ventana temporal y genera un reporte ejecutivo con métricas de volumen, geografía, idioma y engagement.
+
+---
+
+## 📊 Informe Interactivo
+
+**🔗 Ver análisis completo:** https://docs-green-xi.vercel.app
+
+El sitio incluye:
+- Resumen ejecutivo (1,947 items capturados en 11 días)
+- Análisis detallado por plataforma (TikTok, Reddit, YouTube)
+- Hallazgos clave y casos narrables
+- Conclusiones técnicas y validaciones
+
+---
 
 ## Stack
 

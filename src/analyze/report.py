@@ -3,9 +3,10 @@
 Uso:
     .venv/bin/python -m src.analyze.report
 
-Lee todos los JSON en data/raw/{tiktok,reddit}/, calcula métricas y produce:
+Lee todos los JSON en data/raw/{tiktok,reddit,youtube}/, calcula métricas y produce:
   - data/processed/tiktok_posts.csv  (un row por post)
   - data/processed/reddit_items.csv  (un row por post/comment)
+  - data/processed/youtube_videos.csv  (un row por video)
   - data/processed/report.md         (resumen ejecutivo para correo a Laura)
 """
 from __future__ import annotations
@@ -115,6 +116,35 @@ def flatten_reddit(runs: list[dict]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def flatten_youtube(runs: list[dict]) -> pd.DataFrame:
+    rows = []
+    for run in runs:
+        extra = run.get("extra", {})
+        category = extra.get("category", "?")
+        keyword = extra.get("keyword", "?")
+        for it in run.get("items", []):
+            rows.append({
+                "category": category,
+                "keyword": keyword,
+                "id": it.get("id"),
+                "created_at": it.get("date"),
+                "title": it.get("title"),
+                "url": it.get("url"),
+                "channel_name": it.get("channelName"),
+                "channel_url": it.get("channelUrl"),
+                "channel_id": it.get("channelId"),
+                "subscribers": it.get("numberOfSubscribers") or 0,
+                "views": it.get("viewCount") or 0,
+                "likes": it.get("likes") or 0,
+                "comments_count": it.get("commentsCount") or 0,
+                "duration_sec": it.get("duration") or 0,
+                "hashtags": ", ".join(it.get("hashtags") or []),
+                "location": it.get("location"),
+                "text": (it.get("text") or "")[:500],
+            })
+    return pd.DataFrame(rows)
+
+
 def get_actor_runs_cost() -> tuple[float, int]:
     """Consulta Apify API por costo total de runs hoy."""
     try:
@@ -134,7 +164,7 @@ def get_actor_runs_cost() -> tuple[float, int]:
         return -1.0, 0
 
 
-def build_report(tk: pd.DataFrame, rd: pd.DataFrame, cost: float, n_runs: int) -> str:
+def build_report(tk: pd.DataFrame, rd: pd.DataFrame, yt: pd.DataFrame, cost: float, n_runs: int) -> str:
     lines = []
     lines.append("# LIN — Barrido exploratorio · reporte")
     lines.append(f"\n_Generado: {datetime.now().strftime('%Y-%m-%d %H:%M')}_\n")
@@ -145,10 +175,12 @@ def build_report(tk: pd.DataFrame, rd: pd.DataFrame, cost: float, n_runs: int) -
     lines.append("|---|---|---|---|")
     n_tk_kw = tk["keyword"].nunique() if not tk.empty else 0
     n_rd_kw = rd["keyword"].dropna().nunique() if not rd.empty else 0
+    n_yt_kw = yt["keyword"].nunique() if not yt.empty else 0
     cost_str = f"${cost:.2f}" if cost >= 0 else "(error consulta)"
     lines.append(f"| TikTok | {n_tk_kw} | {len(tk):,} | — |")
     lines.append(f"| Reddit | {n_rd_kw} | {len(rd):,} | — |")
-    lines.append(f"| **Total** | — | {len(tk)+len(rd):,} | **{cost_str}** ({n_runs} runs) |")
+    lines.append(f"| YouTube | {n_yt_kw} | {len(yt):,} | — |")
+    lines.append(f"| **Total** | — | {len(tk)+len(rd)+len(yt):,} | **{cost_str}** ({n_runs} runs) |")
     lines.append("")
 
     # ===== TikTok =====
@@ -269,11 +301,39 @@ def build_report(tk: pd.DataFrame, rd: pd.DataFrame, cost: float, n_runs: int) -
                              f"  *{(r['title'] or '')[:120]}*  \n  {r['url']}")
             lines.append("")
 
+    # ===== YouTube =====
+    if not yt.empty:
+        lines.append("## YouTube\n")
+        # Volumen por keyword
+        vol = (yt.groupby(["category", "keyword"])
+                 .agg(items=("id", "count"),
+                      views_total=("views", "sum"),
+                      views_median=("views", "median"),
+                      likes_total=("likes", "sum"))
+                 .reset_index()
+                 .sort_values("items", ascending=False))
+        lines.append("### Volumen por keyword\n")
+        lines.append("| Categoría | Keyword | Videos | Vistas totales | Vistas mediana | Likes totales |")
+        lines.append("|---|---|---:|---:|---:|---:|")
+        for _, r in vol.iterrows():
+            lines.append(f"| {r['category']} | {r['keyword']} | {int(r['items'])} | "
+                         f"{int(r['views_total']):,} | {int(r['views_median']):,} | {int(r['likes_total']):,} |")
+        lines.append("")
+
+        # Top 5 videos
+        lines.append("### Top 5 videos por vistas\n")
+        top = yt.nlargest(5, "views")[["keyword", "channel_name", "title", "views", "likes", "comments_count", "url"]]
+        for _, r in top.iterrows():
+            lines.append(f"- **{r['views']:,} views** · {r['channel_name']} · `{r['keyword']}` · "
+                         f"{r['likes']:,}👍 · {r['comments_count']}💬\n  *{r['title'][:100]}*  \n  {r['url']}")
+        lines.append("")
+
     # ===== Conclusiones técnicas =====
     lines.append("## Conclusiones técnicas (para correo a Laura)\n")
-    lines.append("- **Factibilidad:** scraping funciona en TikTok y Reddit, sin las restricciones de API directa.")
+    lines.append("- **Factibilidad:** scraping funciona en TikTok, Reddit y YouTube, sin las restricciones de API directa.")
     lines.append("- **TikTok devuelve:** texto + idioma detectado + geolocalización a nivel país + métricas completas (plays, likes, shares, comments, collects) + autor + hashtags. La ventana temporal funciona con filtro server-side `PAST_WEEK` + filtro exacto en post-proceso.")
-    lines.append("- **Reddit devuelve:** posts + comentarios en una sola pasada (bono inesperado) + métricas (upvotes, ratio, threads) + comunidad + flair. Estructura permite reconstruir threads por `parentId`/`postId`.")
+    lines.append("- **Reddit devuelve:** posts + comentarios en una sola pasada (bono inesperado) + métricas (upvotes, ratio, threads) + comunidad + flair. Estructura permite reconstruir threads por `parentId`/`postId`. **Limitación detectada:** rate limiting agresivo — requiere proxies residential para producción.")
+    lines.append("- **YouTube devuelve:** videos + metadatos completos (título, descripción, vistas, likes, comentarios, duración, hashtags) + info del canal. **Bajo volumen reciente:** solo ~4% de videos capturados caen en ventana de 12 días (plataforma menos dinámica que TikTok). **Valor diferencial:** transcripciones automáticas disponibles (contenido verbal largo-forma).")
     lines.append("- **Cobertura LATAM:** ver tabla por keyword arriba — las keywords en español tienden a traer % LATAM más alto.")
     lines.append("- **Costo del barrido completo:** ver costo arriba. Escalable proporcionalmente para el piloto final.")
     return "\n".join(lines)
@@ -285,24 +345,29 @@ def main() -> int:
     print("[report] cargando runs...")
     tk_runs = load_runs("tiktok")
     rd_runs = load_runs("reddit")
-    print(f"[report]   TikTok: {len(tk_runs)} runs · Reddit: {len(rd_runs)} runs")
+    yt_runs = load_runs("youtube")
+    print(f"[report]   TikTok: {len(tk_runs)} runs · Reddit: {len(rd_runs)} runs · YouTube: {len(yt_runs)} runs")
 
     tk = flatten_tiktok(tk_runs)
     rd = flatten_reddit(rd_runs)
-    print(f"[report]   TikTok: {len(tk)} items · Reddit: {len(rd)} items")
+    yt = flatten_youtube(yt_runs)
+    print(f"[report]   TikTok: {len(tk)} items · Reddit: {len(rd)} items · YouTube: {len(yt)} items")
 
     tk_csv = PROCESSED / "tiktok_posts.csv"
     rd_csv = PROCESSED / "reddit_items.csv"
+    yt_csv = PROCESSED / "youtube_videos.csv"
     tk.to_csv(tk_csv, index=False)
     rd.to_csv(rd_csv, index=False)
+    yt.to_csv(yt_csv, index=False)
     print(f"[report]   → {tk_csv.relative_to(ROOT)}")
     print(f"[report]   → {rd_csv.relative_to(ROOT)}")
+    print(f"[report]   → {yt_csv.relative_to(ROOT)}")
 
     print("[report] consultando costos a Apify...")
     cost, n_runs = get_actor_runs_cost()
     print(f"[report]   costo hoy: ${cost:.2f} ({n_runs} runs)")
 
-    report = build_report(tk, rd, cost, n_runs)
+    report = build_report(tk, rd, yt, cost, n_runs)
     out_md = PROCESSED / "report.md"
     out_md.write_text(report, encoding="utf-8")
     print(f"[report]   → {out_md.relative_to(ROOT)}")

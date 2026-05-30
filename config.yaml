@@ -1,12 +1,14 @@
 window:
   start: 2026-05-18
-  end: 2026-05-27
+  end: 2026-05-29
 
 limits:
   tiktok_posts_per_keyword: 50
   reddit_posts_per_keyword: 30
   reddit_posts_per_subreddit: 50
   reddit_comments_per_post: 20
+  youtube_videos_per_keyword: 50
+  youtube_comments_per_video: 50
 
 keywords:
   identitarias:
