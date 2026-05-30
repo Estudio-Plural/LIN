@@ -130,27 +130,6 @@ Las tres plataformas capturan aspectos complementarios:
 
 ---
 
-## 🚀 Próximos Pasos Recomendados
-
-### Fase 1: Piloto 4 Semanas
-1. **TikTok + Reddit + YouTube** (stack validado)
-2. Implementar proxies para Reddit
-3. Aumentar límites YouTube (50→150 videos/kw)
-4. Activar transcripciones YouTube
-
-### Fase 2: Análisis (Post-Captura)
-1. Inferencia de idioma para TikTok (`un` → `es`/`pt`)
-2. Análisis NLP sobre transcripciones YouTube
-3. Reconstrucción de threads Reddit vía `parentId`
-4. Identificación de creadores emergentes recurrentes
-
-### Fuera de Scope Piloto
-- **Twitch:** sin acceso a chat (ROI bajo)
-- **Discord:** requiere bot custom (complejidad alta)
-- **X/Twitter:** costo prohibitivo ($5K/mes API Pro)
-
----
-
 ## 💡 Valor Diferencial LIN
 
 ### vs APIs Enterprise

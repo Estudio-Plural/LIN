@@ -1,30 +1,162 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * LIN - Estilo Plural
  */
 
-/* You can override the default Infima variables here. */
+/* Colores Plural */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #0E5C5B;
+  --ifm-color-primary-dark: #0c4f4e;
+  --ifm-color-primary-darker: #0b4a49;
+  --ifm-color-primary-darkest: #093d3c;
+  --ifm-color-primary-light: #106968;
+  --ifm-color-primary-lighter: #116e6d;
+  --ifm-color-primary-lightest: #13807f;
+  --ifm-color-secondary: #E07A3F;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(14, 92, 91, 0.1);
+  --ifm-font-family-base: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --ifm-heading-font-weight: 700;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #13807f;
+  --ifm-color-primary-dark: #117573;
+  --ifm-color-primary-darker: #106f6d;
+  --ifm-color-primary-darkest: #0e5c5b;
+  --ifm-color-primary-light: #158b8a;
+  --ifm-color-primary-lighter: #169190;
+  --ifm-color-primary-lightest: #19a8a7;
+  --ifm-color-secondary: #E07A3F;
+  --docusaurus-highlighted-code-line-bg: rgba(19, 128, 127, 0.3);
+}
+
+/* Hero mejorado */
+.hero {
+  background: linear-gradient(135deg, var(--ifm-color-primary) 0%, #13807f 100%);
+  padding: 4rem 2rem;
+}
+
+.hero__title {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.hero__subtitle {
+  font-size: 1.3rem;
+  opacity: 0.95;
+  font-weight: 400;
+}
+
+/* Cards mejorados */
+.text--center.padding-horiz--md {
+  background: #f8fafb;
+  border-radius: 12px;
+  padding: 2rem 1.5rem !important;
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #e8ecef;
+}
+
+.text--center.padding-horiz--md:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(14, 92, 91, 0.12);
+}
+
+/* Badges/Tags mejorados */
+.badge {
+  background: rgba(14, 92, 91, 0.1);
+  color: var(--ifm-color-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0.25rem;
+}
+
+/* Tablas mejoradas */
+table {
+  font-size: 0.9rem;
+}
+
+table thead {
+  background: var(--ifm-color-primary);
+  color: white;
+}
+
+table thead th {
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+table tbody tr:nth-child(even) {
+  background: #f8fafb;
+}
+
+table tbody td {
+  padding: 0.65rem 1rem;
+}
+
+/* Admonitions mejorados */
+.theme-admonition {
+  border-radius: 8px;
+  border-left-width: 4px;
+}
+
+.alert--success {
+  border-left-color: var(--ifm-color-primary);
+  background: rgba(14, 92, 91, 0.05);
+}
+
+.alert--warning {
+  border-left-color: var(--ifm-color-secondary);
+  background: rgba(224, 122, 63, 0.05);
+}
+
+.alert--info {
+  border-left-color: #4299e1;
+  background: rgba(66, 153, 225, 0.05);
+}
+
+/* Números destacados */
+.numero-destacado {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--ifm-color-primary);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+/* Links mejorados */
+a {
+  font-weight: 500;
+}
+
+/* Botones mejorados */
+.button {
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s;
+}
+
+.button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(14, 92, 91, 0.25);
+}
+
+/* Sidebar mejorado */
+.theme-doc-sidebar-item-link-level-1 {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+/* Homepage features grid mejorado */
+.features_src-pages-index-module {
+  padding: 3rem 0;
+}
+
+.row {
+  gap: 2rem;
 }

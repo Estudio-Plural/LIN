@@ -70,6 +70,10 @@ Las tres plataformas se complementan:
 
 ---
 
-## Próximos Pasos
+## Navegación
 
-Explora los hallazgos detallados por plataforma en la sección **Análisis**.
+Explora los hallazgos detallados:
+- **[TikTok](/docs/analisis/tiktok)** — Creadores emergentes y penetración LATAM
+- **[Reddit](/docs/analisis/reddit)** — Conversaciones y ángulo gamer
+- **[YouTube](/docs/analisis/youtube)** — Contenido analítico largo-forma
+- **[Conclusiones](/docs/conclusiones)** — Validaciones y hallazgos técnicos
