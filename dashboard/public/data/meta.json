@@ -1,0 +1,24 @@
+{
+ "total_videos": 742,
+ "period": {
+  "start": "2026-02-01",
+  "end": "2026-05-31"
+ },
+ "total_plays": 157833315,
+ "n_creators": 689,
+ "pct_latam": 38,
+ "classified": true,
+ "label_dist": {
+  "falso_positivo": 175,
+  "medio_periodismo": 91,
+  "contra_critica": 68,
+  "ambiguo": 119,
+  "manosfera_sincera": 259,
+  "satira_humor": 29
+ },
+ "generated_at": "2026-06-04",
+ "caveats": [
+  "El conteo por mes está sesgado por el scraping (sort LATEST sobre-muestrea lo reciente): no leer como crecimiento.",
+  "El volumen de keywords sobreestima el fenómeno: incluye crítica, sátira, medios y falsos positivos."
+ ]
+}

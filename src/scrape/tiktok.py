@@ -28,12 +28,13 @@ ACTOR_ID = "clockworks/tiktok-scraper"
 TS_FIELDS = ["createTimeISO", "createTime", "createdAt", "createdAtISO"]
 
 
-def run_one(client, keyword: str, limit: int) -> tuple[list[dict], dict]:
+def run_one(client, keyword: str, limit: int, date_filter: str, sorting: str) -> tuple[list[dict], dict]:
     run_input = {
         "searchQueries": [keyword],
         "resultsPerPage": limit,
         "searchSection": "/video",
-        "videoSearchDateFilter": "PAST_WEEK",
+        "videoSearchDateFilter": date_filter,
+        "videoSearchSorting": sorting,
         "shouldDownloadVideos": False,
         "shouldDownloadCovers": False,
         "shouldDownloadSlideshowImages": False,
@@ -58,16 +59,20 @@ def main() -> int:
     start_unix, end_unix = window_unix(cfg["window"]["start"], cfg["window"]["end"])
     limit = args.limit or cfg["limits"]["tiktok_posts_per_keyword"]
 
+    tk = cfg.get("tiktok", {})
+    date_filter = tk.get("search_date_filter", "PAST_WEEK")
+    sorting = tk.get("search_sorting", "MOST_RELEVANT")
+
     if args.keyword:
         targets = [("smoke", args.keyword)]
     else:
         targets = flat_keywords(cfg)
 
-    print(f"[tiktok] {len(targets)} keyword(s), ventana {cfg['window']['start']} → {cfg['window']['end']}, limit {limit}/kw")
+    print(f"[tiktok] {len(targets)} keyword(s), ventana {cfg['window']['start']} → {cfg['window']['end']}, filtro {date_filter}/{sorting}, limit {limit}/kw")
 
     for category, kw in targets:
         print(f"[tiktok] · {category}/{kw}")
-        items, meta = run_one(client, kw, limit)
+        items, meta = run_one(client, kw, limit, date_filter, sorting)
         filtered = filter_by_window(items, start_unix, end_unix, TS_FIELDS)
         path = save_run_output(
             platform="tiktok",

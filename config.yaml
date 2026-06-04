@@ -1,14 +1,22 @@
 window:
-  start: 2026-05-18
-  end: 2026-05-29
+  start: 2026-02-01
+  end: 2026-05-31
 
 limits:
-  tiktok_posts_per_keyword: 50
+  tiktok_posts_per_keyword: 200
   reddit_posts_per_keyword: 30
   reddit_posts_per_subreddit: 50
   reddit_comments_per_post: 20
   youtube_videos_per_keyword: 50
   youtube_comments_per_video: 50
+
+# TikTok — búsqueda por keyword. El actor solo acepta buckets de fecha
+# (no rango absoluto): usamos LAST_6_MONTHS y recortamos a la ventana exacta
+# en post-proceso. LATEST cubre mejor el periodo que MOST_RELEVANT — validado
+# en smoke 2026-06-04 (52 vs 42 de 70 en ventana Feb–May).
+tiktok:
+  search_date_filter: LAST_6_MONTHS
+  search_sorting: LATEST
 
 keywords:
   identitarias:
