@@ -74,6 +74,18 @@ export const LABEL_META: Record<string, { es: string; color: string; noise: bool
   ambiguo: { es: "Ambiguo", color: "#a1a1aa", noise: true },
 };
 
+export const SUBTEMA_LABELS: Record<string, string> = {
+  alto_valor: "Alto valor",
+  alfa: "Alfa / sigma",
+  looksmax: "Looksmaxxing",
+  red_pill: "Red pill",
+  hipergamia: "Hipergamia",
+  antifeminismo: "Antifeminismo",
+  fitness: "Fitness / disciplina",
+  gaming: "Gaming",
+  otro: "Otro",
+};
+
 export function fmtNum(n: number): string {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(n >= 10_000_000 ? 0 : 1) + "M";
   if (n >= 1_000) return (n / 1_000).toFixed(n >= 10_000 ? 0 : 1) + "k";
@@ -155,6 +167,27 @@ export function labelByKeyword(videos: Video[]) {
   return [...map.entries()]
     .map(([keyword, counts]) => ({ keyword, total: Object.values(counts).reduce((a, b) => a + b, 0), ...counts }))
     .sort((a, b) => b.total - a.total);
+}
+
+// Subtemas dentro de los videos clasificados como manosfera sincera.
+export function subtopicsOfSignal(videos: Video[]) {
+  const sinceras = videos.filter((v) => v.label === "manosfera_sincera");
+  const map = new Map<string, Video[]>();
+  for (const v of sinceras) {
+    const s = v.subtema ?? "otro";
+    if (!map.has(s)) map.set(s, []);
+    map.get(s)!.push(v);
+  }
+  const total = sinceras.length;
+  return [...map.entries()]
+    .map(([subtema, vs]) => ({
+      subtema,
+      label: SUBTEMA_LABELS[subtema] ?? subtema,
+      count: vs.length,
+      share: total ? Math.round((100 * vs.length) / total) : 0,
+      playsMedian: median(vs.map((v) => v.plays)),
+    }))
+    .sort((a, b) => b.count - a.count);
 }
 
 export function topCreators(videos: Video[], topN = 12) {

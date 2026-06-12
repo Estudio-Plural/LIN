@@ -45,14 +45,18 @@ export function Stat({
   value,
   label,
   hint,
+  accent = false,
 }: {
   value: ReactNode;
   label: string;
   hint?: string;
+  accent?: boolean;
 }) {
   return (
     <div className="flex flex-col">
-      <span className="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl tabular-nums">
+      <span
+        className={`text-3xl font-bold tracking-tight sm:text-4xl tabular-nums ${accent ? "text-red-500" : "text-zinc-50"}`}
+      >
         {value}
       </span>
       <span className="mt-1 text-sm font-medium text-zinc-400">{label}</span>

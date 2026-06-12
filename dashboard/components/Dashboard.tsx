@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Video, Meta, NetworkData, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/data";
 import { StatsBar } from "./sections/StatsBar";
 import { SignalVsNoise } from "./sections/SignalVsNoise";
+import { SignalSubtopics } from "./sections/SignalSubtopics";
+import { Explorer } from "./sections/Explorer";
 import { HashtagNetwork } from "./sections/HashtagNetwork";
 import { CategoryMap } from "./sections/CategoryMap";
 import { Geography } from "./sections/Geography";
@@ -32,13 +34,17 @@ export function Dashboard() {
       .catch(() => setVideos([]));
   }, []);
 
-  const filtered = useMemo(() => {
+  // Solo filtro de categoría: Señal vs Ruido y Subtemas necesitan ver el corpus
+  // completo (con ruido), si no el toggle "solo manosfera real" las auto-anula.
+  const catFiltered = useMemo(() => {
     if (!videos) return [];
-    let vs = videos;
-    if (cat) vs = vs.filter((v) => v.category === cat);
-    if (hideNoise && meta?.classified) vs = vs.filter((v) => v.label === "manosfera_sincera");
-    return vs;
-  }, [videos, cat, hideNoise, meta]);
+    return cat ? videos.filter((v) => v.category === cat) : videos;
+  }, [videos, cat]);
+
+  const filtered = useMemo(() => {
+    if (hideNoise && meta?.classified) return catFiltered.filter((v) => v.label === "manosfera_sincera");
+    return catFiltered;
+  }, [catFiltered, hideNoise, meta]);
 
   if (!videos || !meta || !network) {
     return (
@@ -91,7 +97,8 @@ export function Dashboard() {
 
       <main className="mx-auto max-w-6xl space-y-16 px-6 py-12">
         <StatsBar meta={meta} />
-        <SignalVsNoise videos={filtered} classified={meta.classified} />
+        <SignalVsNoise videos={catFiltered} classified={meta.classified} />
+        <SignalSubtopics videos={catFiltered} />
         <HashtagNetwork network={network} />
         <CategoryMap videos={filtered} />
         <div className="grid gap-5 lg:grid-cols-2">
@@ -100,6 +107,7 @@ export function Dashboard() {
         </div>
         <BridgeCallout videos={filtered} />
         <Creators videos={filtered} />
+        <Explorer videos={filtered} />
         <Methodology meta={meta} />
       </main>
 
