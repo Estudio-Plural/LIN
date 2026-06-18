@@ -70,6 +70,18 @@ export type NetworkData = {
   meta: { n_videos: number; assigned: number; coverage_pct: number; n_communities: number };
 };
 
+export type GrowthData = {
+  generated_at: string;
+  window: { start: string | null; end: string | null; days: number };
+  n_snapshots: number;
+  n_videos: number;
+  total_new_plays: number;
+  peak_before_2d: { count: number; total: number; pct: number };
+  top_creator_share: number;
+  velocity_by_age: { age: number; plays_per_day: number; n: number }[];
+  creators: { author: string; videos: number; new_plays: number; share_new: number; base_plays: number }[];
+};
+
 // Orden de etiquetas para barras señal→ruido (señal primero).
 export const LABEL_ORDER = [
   "manosfera_sincera",

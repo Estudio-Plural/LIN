@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { Video, Meta, NetworkData, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/data";
+import { Video, Meta, NetworkData, GrowthData, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/data";
 import { StatsBar } from "./sections/StatsBar";
 import { SignalVsNoise } from "./sections/SignalVsNoise";
 import { SignalSubtopics } from "./sections/SignalSubtopics";
 import { Explorer } from "./sections/Explorer";
 import { HashtagNetwork } from "./sections/HashtagNetwork";
+import { GrowthCurve } from "./sections/GrowthCurve";
 import { CategoryMap } from "./sections/CategoryMap";
 import { Geography } from "./sections/Geography";
 import { Engagement } from "./sections/Engagement";
@@ -17,6 +18,7 @@ export function Dashboard() {
   const [videos, setVideos] = useState<Video[] | null>(null);
   const [meta, setMeta] = useState<Meta | null>(null);
   const [network, setNetwork] = useState<NetworkData | null>(null);
+  const [growth, setGrowth] = useState<GrowthData | null>(null);
   const [cat, setCat] = useState<string | null>(null);
   const [hideNoise, setHideNoise] = useState(false);
 
@@ -32,6 +34,11 @@ export function Dashboard() {
         setNetwork(n);
       })
       .catch(() => setVideos([]));
+    // El monitor es opcional: si falta growth.json, el resto del dashboard igual carga.
+    fetch("/data/growth.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((g) => setGrowth(g))
+      .catch(() => setGrowth(null));
   }, []);
 
   // Solo filtro de categoría: Señal vs Ruido y Subtemas necesitan ver el corpus
@@ -100,6 +107,7 @@ export function Dashboard() {
         <SignalVsNoise videos={catFiltered} classified={meta.classified} />
         <SignalSubtopics videos={catFiltered} />
         <HashtagNetwork network={network} />
+        {growth && <GrowthCurve growth={growth} />}
         <CategoryMap videos={filtered} />
         <div className="grid gap-5 lg:grid-cols-2">
           <Geography videos={filtered} />

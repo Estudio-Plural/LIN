@@ -23,6 +23,9 @@ al Banco Mundial. Todo el texto orientado a usuario va en español.
 1. `python -m src.analyze.classify` → etiqueta cada video (señal vs ruido)
 2. `build_dashboard_data.py` (videos.json + meta.json) y `build_network.py` (red de **comunidades
    temáticas** por modularidad, requiere `networkx`) → JSONs en `data/dashboard/`
+2.5. `python -m src.monitor.build_growth_data` → `growth.json` (curva de vida del monitor; reusa los
+   CSV de `build_curves_apify`). Alimenta la sección "Curva de vida" del dashboard; carga tolerante
+   (si falta el JSON, el resto del dashboard igual renderiza)
 3. Copiar `data/dashboard/*.json` → `dashboard/public/data/`
 4. Deploy: `npx vercel deploy --prod --yes --cwd dashboard`
 

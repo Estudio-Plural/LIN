@@ -1,0 +1,156 @@
+{
+ "generated_at": "2026-06-18",
+ "window": {
+  "start": "2026-06-12",
+  "end": "2026-06-18",
+  "days": 5
+ },
+ "n_snapshots": 7,
+ "n_videos": 362,
+ "total_new_plays": 12114596,
+ "peak_before_2d": {
+  "count": 101,
+  "total": 204,
+  "pct": 50
+ },
+ "top_creator_share": 79,
+ "velocity_by_age": [
+  {
+   "age": 0,
+   "plays_per_day": 19044,
+   "n": 57
+  },
+  {
+   "age": 1,
+   "plays_per_day": 20473,
+   "n": 202
+  },
+  {
+   "age": 2,
+   "plays_per_day": 20586,
+   "n": 189
+  },
+  {
+   "age": 3,
+   "plays_per_day": 14635,
+   "n": 146
+  },
+  {
+   "age": 4,
+   "plays_per_day": 3934,
+   "n": 101
+  },
+  {
+   "age": 5,
+   "plays_per_day": 2924,
+   "n": 99
+  },
+  {
+   "age": 6,
+   "plays_per_day": 1648,
+   "n": 93
+  },
+  {
+   "age": 7,
+   "plays_per_day": 2799,
+   "n": 79
+  },
+  {
+   "age": 8,
+   "plays_per_day": 1515,
+   "n": 50
+  },
+  {
+   "age": 9,
+   "plays_per_day": 1755,
+   "n": 21
+  },
+  {
+   "age": 10,
+   "plays_per_day": 2104,
+   "n": 15
+  },
+  {
+   "age": 11,
+   "plays_per_day": 1642,
+   "n": 12
+  },
+  {
+   "age": 12,
+   "plays_per_day": 965,
+   "n": 6
+  }
+ ],
+ "creators": [
+  {
+   "author": "danielapolofi",
+   "videos": 26,
+   "new_plays": 9609862,
+   "share_new": 79,
+   "base_plays": 14842904
+  },
+  {
+   "author": "luzenelalmaconpatricia",
+   "videos": 74,
+   "new_plays": 800794,
+   "share_new": 7,
+   "base_plays": 2566968
+  },
+  {
+   "author": "_keila_perez_",
+   "videos": 23,
+   "new_plays": 597378,
+   "share_new": 5,
+   "base_plays": 1341490
+  },
+  {
+   "author": "urcinoestacio",
+   "videos": 47,
+   "new_plays": 538897,
+   "share_new": 4,
+   "base_plays": 625473
+  },
+  {
+   "author": "psialap",
+   "videos": 48,
+   "new_plays": 441489,
+   "share_new": 4,
+   "base_plays": 1103267
+  },
+  {
+   "author": "diarioparacaballeros",
+   "videos": 2,
+   "new_plays": 66441,
+   "share_new": 1,
+   "base_plays": 159600
+  },
+  {
+   "author": "eljhoncortes",
+   "videos": 58,
+   "new_plays": 50191,
+   "share_new": 0,
+   "base_plays": 135252
+  },
+  {
+   "author": "gm.masculinity",
+   "videos": 60,
+   "new_plays": 9023,
+   "share_new": 0,
+   "base_plays": 32854
+  },
+  {
+   "author": "yerson.estaci",
+   "videos": 21,
+   "new_plays": 468,
+   "share_new": 0,
+   "base_plays": 4766
+  },
+  {
+   "author": "growingmind.arg",
+   "videos": 3,
+   "new_plays": 53,
+   "share_new": 0,
+   "base_plays": 3804
+  }
+ ]
+}
