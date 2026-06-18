@@ -38,18 +38,44 @@ export type Meta = {
 
 export type GraphNode = {
   id: string;
-  freq?: number;
-  cluster?: string | null;
-  reach?: number;
-  videos?: number;
-  label?: string | null;
-  top_url?: string;
+  freq: number;
+  community: number;
+  color: string;
+  x?: number;
+  y?: number;
 };
 export type GraphLink = { source: string; target: string; weight: number };
+export type Community = {
+  id: number;
+  anchor: string;
+  name: string;
+  auto: string;
+  color: string;
+  hashtags: string[];
+  n_hashtags: number;
+  n_videos: number;
+  share: number;
+  plays: number;
+  label_dist: Record<string, number>;
+  dominant_label: string | null;
+  top_creators: string[];
+  desc: string;
+};
 export type NetworkData = {
   hashtag: { nodes: GraphNode[]; links: GraphLink[] };
-  creators: { nodes: GraphNode[]; links: GraphLink[] };
+  communities: Community[];
+  meta: { n_videos: number; assigned: number; coverage_pct: number; n_communities: number };
 };
+
+// Orden de etiquetas para barras señal→ruido (señal primero).
+export const LABEL_ORDER = [
+  "manosfera_sincera",
+  "contra_critica",
+  "satira_humor",
+  "ambiguo",
+  "medio_periodismo",
+  "falso_positivo",
+];
 
 export const CATEGORY_LABELS: Record<string, string> = {
   identitarias: "Identitarias",
