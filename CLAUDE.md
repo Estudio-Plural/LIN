@@ -45,13 +45,31 @@ Mide la curva de vida de videos frescos de creadores manosfera curados.
 - `setup_apify_schedule.py` es DRY-RUN por defecto; tocar la nube requiere flags explícitos
   (`--create-task`, `--first-run`, `--create-schedule`, `--enable`)
 
+## Validación de la clasificación (PENDIENTE — propuesto a Camino 2026-06-18)
+
+El 35% "señal real" es estimación de gemini sin validar (ver caveat en Convenciones). Plan acordado
+para darle respaldo, en dos fases (pedido a Camino por correo el 2026-06-18, a la espera de su OK):
+
+- **Fase 1 (~30 videos, ~20 min):** dos personas etiquetan a mano una muestra **estratificada por
+  etiqueta y cargada a los casos de frontera** (`manosfera_sincera ↔ ambiguo ↔ contra_critica`, donde
+  el modelo más duda y donde los errores mueven el 35%). Valida instrucciones + lectura direccional.
+- **Fase 2 (~70 más):** completar hasta ~100–150 videos para un κ estable y accuracy reportable (~±6–8pp).
+
+Claves de método (no negociar): **estratificar, no muestrear al azar** (clases raras como `satira_humor`
+~4% no aparecen en una muestra chica aleatoria); **doble anotación** del mismo set para separar error del
+modelo de ambigüedad de la tarea (κ humano-humano + acuerdo humano-modelo). 25 videos NO alcanzan para un
+número reportable (IC demasiado ancho con 6 clases).
+
+Pendiente operativo cuando den el OK: generar el set de fase 1 (link + texto + etiqueta del modelo) en
+una planilla de ver-y-marcar.
+
 ## Convenciones
 
 - Ejecutar módulos desde la raíz del repo: `python -m src.modulo.script`
 - Los conteos por mes del barrido están sesgados por el scraping (sort LATEST) — no leer como
   crecimiento; para dinámica temporal usar el monitor
 - Volumen crudo de keywords sobreestima el fenómeno ~3× — usar la capa clasificada (solo ~35%
-  es manosfera sincera). Ese 35% es estimación de gemini **sin validación humana** (pendiente:
-  muestra anotada + acuerdo κ); no presentarlo como medición con margen de error
+  es manosfera sincera). Ese 35% es estimación de gemini **sin validación humana** (plan de validación
+  en dos fases arriba: §Validación de la clasificación); no presentarlo como medición con margen de error
 - Geo "Latinoamérica" del dashboard = país incl. **Brasil**, excl. **España** (decisión 2026-06-17);
   por idioma el peso hispano es más conservador (~29% es/pt, ~26% sin idioma detectado)
