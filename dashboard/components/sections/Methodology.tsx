@@ -24,14 +24,26 @@ export function Methodology({ meta }: { meta: Meta }) {
             {meta.caveats.map((c, i) => (
               <li key={i}>{c}</li>
             ))}
-            <li>~30% del contenido viene con idioma no detectado; la geolocalización solo existe cuando TikTok la expone (~{meta.pct_latam ? "38" : "—"}% de cobertura para LATAM).</li>
+            <li>
+              Geografía: TikTok expone el país de creación de prácticamente todos los videos
+              ({meta.geo_coverage ?? 100}% de cobertura). El {meta.pct_latam}% es de Latinoamérica
+              —incluye Brasil; España queda fuera por europea—, no una cobertura parcial.
+            </li>
+            <li>
+              Idioma vs. geografía: por lengua detectada solo ~{meta.pct_es_pt ?? "—"}% es español/portugués
+              y ~{meta.pct_lang_undet ?? "—"}% queda sin determinar, así que el peso hispano por idioma es
+              más conservador que por geografía.
+            </li>
           </ul>
         </div>
         <div>
           <div className="mb-2 font-semibold text-zinc-200">Clasificación</div>
           <p>
             Cada video se etiqueta con <code className="text-zinc-300">gemini-2.5-flash</code> (manosfera sincera / contra-crítica /
-            sátira / medio / falso positivo / ambiguo) para separar señal de ruido. Es una capa asistida por IA, revisable y auditable.
+            sátira / medio / falso positivo / ambiguo) para separar señal de ruido. Es una capa asistida por IA,
+            auditable video por video en el explorador — pero aún <strong className="text-zinc-300">sin validación
+            humana sobre una muestra</strong>, así que el 35% de “señal real” es una estimación del modelo, no una
+            medición con margen de error.
           </p>
         </div>
         <p className="border-t border-zinc-800 pt-4 text-xs text-zinc-600">

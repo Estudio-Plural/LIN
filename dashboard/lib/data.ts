@@ -30,6 +30,9 @@ export type Meta = {
   total_plays: number;
   n_creators: number;
   pct_latam: number | null;
+  geo_coverage?: number | null;
+  pct_es_pt?: number | null;
+  pct_lang_undet?: number | null;
   classified: boolean;
   label_dist: Record<string, number>;
   generated_at: string;

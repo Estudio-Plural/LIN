@@ -12,11 +12,11 @@ export function StatsBar({ meta }: { meta: Meta }) {
     >
       <Stat value={meta.total_videos.toLocaleString("es")} label="Videos capturados" />
       <Stat value={fmtNum(meta.total_plays)} label="Reproducciones totales" />
-      <Stat value={`${meta.pct_latam}%`} label="LATAM" hint="de los geolocalizados" />
+      <Stat value={`${meta.pct_latam}%`} label="Latinoamérica" hint="incl. Brasil, sin España" />
       <Stat value={meta.n_creators.toLocaleString("es")} label="Creadores únicos" />
       <Stat value="4 meses" label="Feb – May 2026" hint="TikTok · vía Apify" />
       {pctSignal !== null && (
-        <Stat accent value={`${pctSignal}%`} label="Señal real" hint={`${sinceras} videos sinceros`} />
+        <Stat accent value={`${pctSignal}%`} label="Señal real" hint={`${sinceras} sinceros · clasif. IA`} />
       )}
     </div>
   );

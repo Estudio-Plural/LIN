@@ -20,8 +20,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data" / "dashboard"
 CLASSIFIED = ROOT / "data" / "processed" / "classified.json"
+# Latinoamérica para el stat geográfico: incluye Brasil (lusófona, parte de la región),
+# excluye España (europea). Decisión 2026-06-17 — el foco es la región, no la lengua.
 LATAM = {"CO", "MX", "AR", "CL", "PE", "EC", "VE", "UY", "PY", "BO",
-         "GT", "CR", "PA", "DO", "PR", "SV", "HN", "NI", "CU", "ES", "BR"}
+         "GT", "CR", "PA", "DO", "PR", "SV", "HN", "NI", "CU", "BR"}
 
 
 def load_videos() -> list[dict]:
@@ -64,12 +66,18 @@ def main() -> int:
     json.dump(vids, open(OUT / "videos.json", "w"), ensure_ascii=False)
 
     geo = [v for v in vids if v["loc"]]
+    es_pt = sum(1 for v in vids if v["lang"] in ("es", "pt"))
+    undet = sum(1 for v in vids if not v["lang"] or v["lang"] == "un")
     meta = {
         "total_videos": len(vids),
         "period": {"start": "2026-02-01", "end": "2026-05-31"},
         "total_plays": sum(v["plays"] for v in vids),
         "n_creators": len({v["author"] for v in vids if v["author"]}),
-        "pct_latam": round(100 * sum(1 for v in geo if v["is_latam"]) / len(geo)) if geo else None,
+        # pct_latam = share sobre TODOS los videos (la geo está al ~100%, no es una fracción)
+        "pct_latam": round(100 * sum(1 for v in vids if v["is_latam"]) / len(vids)) if vids else None,
+        "geo_coverage": round(100 * len(geo) / len(vids)) if vids else None,
+        "pct_es_pt": round(100 * es_pt / len(vids)) if vids else None,
+        "pct_lang_undet": round(100 * undet / len(vids)) if vids else None,
         "classified": bool(labels),
         "label_dist": dict(Counter(v["label"] for v in vids if v["label"])),
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
