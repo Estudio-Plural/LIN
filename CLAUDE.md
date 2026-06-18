@@ -10,7 +10,7 @@ al Banco Mundial. Todo el texto orientado a usuario va en español.
 - `src/monitor/` — monitor de crecimiento de videos frescos (ver abajo)
 - `dashboard/` — dashboard Next.js (tiene su propio CLAUDE.md/AGENTS.md — leerlo antes de tocar)
 - `docs/` — sitio Docusaurus del informe
-- `data/` — **gitignorado**: raw, processed y derivados solo existen localmente
+- `data/` — raw/processed **gitignorados** (solo locales); excepción: `data/dashboard/*.json` (los que alimentan el dashboard) sí están versionados
 - `config.yaml` — keywords y ventanas del barrido
 
 ## Setup
@@ -21,7 +21,8 @@ al Banco Mundial. Todo el texto orientado a usuario va en español.
 ## Pipeline del dashboard
 
 1. `python -m src.analyze.classify` → etiqueta cada video (señal vs ruido)
-2. `build_dashboard_data.py` y `build_network.py` → JSONs en `data/dashboard/`
+2. `build_dashboard_data.py` (videos.json + meta.json) y `build_network.py` (red de **comunidades
+   temáticas** por modularidad, requiere `networkx`) → JSONs en `data/dashboard/`
 3. Copiar `data/dashboard/*.json` → `dashboard/public/data/`
 4. Deploy: `npx vercel deploy --prod --yes --cwd dashboard`
 
@@ -47,4 +48,7 @@ Mide la curva de vida de videos frescos de creadores manosfera curados.
 - Los conteos por mes del barrido están sesgados por el scraping (sort LATEST) — no leer como
   crecimiento; para dinámica temporal usar el monitor
 - Volumen crudo de keywords sobreestima el fenómeno ~3× — usar la capa clasificada (solo ~35%
-  es manosfera sincera)
+  es manosfera sincera). Ese 35% es estimación de gemini **sin validación humana** (pendiente:
+  muestra anotada + acuerdo κ); no presentarlo como medición con margen de error
+- Geo "Latinoamérica" del dashboard = país incl. **Brasil**, excl. **España** (decisión 2026-06-17);
+  por idioma el peso hispano es más conservador (~29% es/pt, ~26% sin idioma detectado)
