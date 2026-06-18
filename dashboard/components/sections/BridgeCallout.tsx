@@ -10,9 +10,9 @@ export function BridgeCallout({ videos }: { videos: Video[] }) {
   return (
     <section>
       <SectionTitle
-        kicker="El puente invisible"
-        title="La ruta fitness → manosfera no está en los hashtags"
-        subtitle="La hipótesis del brief: el algoritmo lleva de calistenia/gym a contenido manosfera extremo. Pero los creadores no lo declaran."
+        kicker="La hipótesis del puente"
+        title="Fitness y manosfera casi no se cruzan en los hashtags"
+        subtitle="El brief plantea que el algoritmo llevaría de calistenia/gym a contenido manosfera. En cómo etiquetan los creadores, ese cruce casi no aparece — lo que ni lo confirma ni lo descarta."
       />
       <Card className="grid gap-6 p-8 sm:grid-cols-[auto_1fr] sm:items-center">
         <div className="flex items-center gap-6">
@@ -27,11 +27,14 @@ export function BridgeCallout({ videos }: { videos: Video[] }) {
           </div>
         </div>
         <p className="text-sm leading-relaxed text-zinc-300">
-          Solo <strong className="text-zinc-100">{bridge.length} de {fit.length}</strong> videos fitness co-etiquetan manosfera.
-          Si el pipeline de radicalización existe, <strong className="text-zinc-100">vive en el feed, no en los hashtags</strong> — es el
-          algoritmo el que conecta calistenia con &ldquo;alto valor&rdquo; y red pill, no los creadores.
-          Por eso medirlo no se puede con scraping de keywords: requiere un <strong className="text-zinc-100">experimento de exposición</strong>
-          {" "}(cuentas-títere controladas que registren qué les empuja el For You).
+          Solo <strong className="text-zinc-100">{bridge.length} de {fit.length}</strong> videos con hashtag fitness
+          también etiquetan manosfera. Eso respalda una afirmación acotada: <strong className="text-zinc-100">el cruce no
+          vive en cómo etiquetan los creadores</strong>. No prueba que el algoritmo sea el puente — la co-ocurrencia de
+          hashtags no observa el feed, así que con estos datos la hipótesis del brief no se confirma ni se refuta.
+          En la red, además, <strong className="text-zinc-100">&ldquo;fitness/gymcel&rdquo; forma su propia comunidad</strong>,
+          separada del núcleo ideológico de &ldquo;alto valor&rdquo;. Resolverlo pide otro instrumento: un{" "}
+          <strong className="text-zinc-100">experimento de exposición</strong> con cuentas-títere controladas que registren
+          qué empuja el For You.
         </p>
       </Card>
     </section>
