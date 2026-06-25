@@ -45,10 +45,11 @@ Mide la curva de vida de videos frescos de creadores manosfera curados.
 - `setup_apify_schedule.py` es DRY-RUN por defecto; tocar la nube requiere flags explícitos
   (`--create-task`, `--first-run`, `--create-schedule`, `--enable`)
 
-## Validación de la clasificación (PENDIENTE — propuesto a Camino 2026-06-18)
+## Validación de la clasificación (EN CURSO — Camino dio OK 2026-06-25; Fase 1 enviada)
 
-El 35% "señal real" es estimación de gemini sin validar (ver caveat en Convenciones). Plan acordado
-para darle respaldo, en dos fases (pedido a Camino por correo el 2026-06-18, a la espera de su OK):
+El 35% "señal real" es estimación de gemini sin validar (ver caveat en Convenciones). Plan en dos
+fases para darle respaldo; Camino respondió OK el 2026-06-25 y la Fase 1 ya está armada y enviada
+(plazo de marcado pedido: martes 30/06):
 
 - **Fase 1 (~30 videos, ~20 min):** dos personas etiquetan a mano una muestra **estratificada por
   etiqueta y cargada a los casos de frontera** (`manosfera_sincera ↔ ambiguo ↔ contra_critica`, donde
@@ -60,8 +61,31 @@ Claves de método (no negociar): **estratificar, no muestrear al azar** (clases 
 modelo de ambigüedad de la tarea (κ humano-humano + acuerdo humano-modelo). 25 videos NO alcanzan para un
 número reportable (IC demasiado ancho con 6 clases).
 
-Pendiente operativo cuando den el OK: generar el set de fase 1 (link + texto + etiqueta del modelo) en
-una planilla de ver-y-marcar.
+Set de Fase 1 (generado): `python -m src.analyze.build_validation_set` → escribe en
+`data/processed/validacion_fase1/` (gitignored): `LIN_validacion_fase1.xlsx` (planilla de ver-y-marcar,
+**anotación CIEGA** — a propósito NO muestra la etiqueta del modelo, para no anclar al anotador) +
+`CLAVE_fase1.csv` (id→etiqueta+confianza del modelo; local, para medir el acuerdo después). Muestra
+estratificada y cargada a frontera por **menor `confianza`** (de `classified.json`): 30 videos
+(8 sincera / 7 ambiguo / 5 crítica / 5 sátira / 3 FP / 2 medio), ~28 hispanos, intercalados. Para Fase 2:
+subir cupos en `STRATA`. La planilla pide mirar el video (no solo el texto) y una casilla "la cuenta entera
+parece parodia" (señal a nivel de actor — clasificamos contenido por video sobre el texto, no cuentas ni audio).
+
+### Hilos abiertos por Camino (respuesta 2026-06-25, contestada por correo el mismo día)
+
+Además de la validación (punto 1), su correo abrió 4 frentes con seguimiento pendiente:
+
+- **Comportamental / narrativo:** la escucha da el quién/qué; la lectura de emociones/necesidades sale
+  mejor con un **codebook compartido** + un pase del modelo que alimente la lectura narrativa de Juan Diego.
+  Lo comportamental por Plural lo lleva **Juan**.
+- **Formato / algoritmo:** extraíbles del raw pero aún sin exponer — duración (`videoMeta.duration`),
+  slideshow vs. video (`isSlideshow`), frecuencia de publicación. Lo visual (rostro vs. generado) es
+  lane audiovisual de Camino. La curva de vida (~72h, alcance concentrado) ya conecta con inmunización.
+- **Ecosistemas adyacentes** (apuestas / trading-cripto / emprendimiento / productividad): HOY **no
+  cubiertos** (keywords no los incluyen; no hay comunidad financiera en la red). Comprometido sin ampliar
+  alcance aún: (a) **sondeo barato** sobre el corpus actual (¿creadores/hashtags ya pisan finanzas/apuestas/
+  hustle?); (b) barrido acotado de esas keywords **solo si (a) pinta**, decisión conjunta. Puente más cercano
+  ya visible: monk mode / sigma grindset. Precedente de método: el cruce fitness→manosfera NO vive en los
+  hashtags (2/37) — estas adyacencias se prueban con datos, no se asumen.
 
 ## Convenciones
 
