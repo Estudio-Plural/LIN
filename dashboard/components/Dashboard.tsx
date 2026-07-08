@@ -1,9 +1,19 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { Video, Meta, NetworkData, GrowthData, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/data";
+import {
+  Video,
+  Meta,
+  NetworkData,
+  GrowthData,
+  ValidationData,
+  AdjacencyData,
+  CATEGORY_LABELS,
+  CATEGORY_COLORS,
+} from "@/lib/data";
 import { StatsBar } from "./sections/StatsBar";
 import { SignalVsNoise } from "./sections/SignalVsNoise";
 import { SignalSubtopics } from "./sections/SignalSubtopics";
+import { Validation } from "./sections/Validation";
 import { Explorer } from "./sections/Explorer";
 import { HashtagNetwork } from "./sections/HashtagNetwork";
 import { GrowthCurve } from "./sections/GrowthCurve";
@@ -12,6 +22,7 @@ import { Geography } from "./sections/Geography";
 import { Engagement } from "./sections/Engagement";
 import { Creators } from "./sections/Creators";
 import { BridgeCallout } from "./sections/BridgeCallout";
+import { Adjacencies } from "./sections/Adjacencies";
 import { Methodology } from "./sections/Methodology";
 
 export function Dashboard() {
@@ -19,6 +30,8 @@ export function Dashboard() {
   const [meta, setMeta] = useState<Meta | null>(null);
   const [network, setNetwork] = useState<NetworkData | null>(null);
   const [growth, setGrowth] = useState<GrowthData | null>(null);
+  const [validation, setValidation] = useState<ValidationData | null>(null);
+  const [adjacency, setAdjacency] = useState<AdjacencyData | null>(null);
   const [cat, setCat] = useState<string | null>(null);
   const [hideNoise, setHideNoise] = useState(false);
 
@@ -39,6 +52,15 @@ export function Dashboard() {
       .then((r) => (r.ok ? r.json() : null))
       .then((g) => setGrowth(g))
       .catch(() => setGrowth(null));
+    // Validación y adyacencias: también opcionales (carga tolerante).
+    fetch("/data/validation.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setValidation(d))
+      .catch(() => setValidation(null));
+    fetch("/data/adyacencias.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setAdjacency(d))
+      .catch(() => setAdjacency(null));
   }, []);
 
   // Solo filtro de categoría: Señal vs Ruido y Subtemas necesitan ver el corpus
@@ -106,6 +128,7 @@ export function Dashboard() {
         <StatsBar meta={meta} />
         <SignalVsNoise videos={catFiltered} classified={meta.classified} />
         <SignalSubtopics videos={catFiltered} />
+        {validation && <Validation v={validation} />}
         <HashtagNetwork network={network} />
         {growth && <GrowthCurve growth={growth} />}
         <CategoryMap videos={filtered} />
@@ -114,6 +137,7 @@ export function Dashboard() {
           <Engagement videos={filtered} />
         </div>
         <BridgeCallout videos={filtered} />
+        {adjacency && <Adjacencies a={adjacency} />}
         <Creators videos={filtered} />
         <Explorer videos={filtered} />
         <Methodology meta={meta} />

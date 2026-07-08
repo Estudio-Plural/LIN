@@ -1,0 +1,94 @@
+{
+  "n_videos": 30,
+  "n_annotators": 2,
+  "frontier_note": "muestra estratificada y cargada a la frontera de baja confianza (piso, no accuracy del corpus)",
+  "annotator_labeled": [
+    22,
+    30
+  ],
+  "lang_barrier": 7,
+  "private": 1,
+  "human_human": {
+    "kappa_6class": 0.283,
+    "agreement_6class": 0.455,
+    "n": 22,
+    "kappa_binary": 0.431,
+    "agreement_binary": 0.727
+  },
+  "human_model": [
+    {
+      "annotator": 1,
+      "kappa": 0.234,
+      "agreement": 0.364,
+      "n": 22
+    },
+    {
+      "annotator": 2,
+      "kappa": 0.125,
+      "agreement": 0.3,
+      "n": 30
+    }
+  ],
+  "consensus": {
+    "n_both": 22,
+    "n_consensus": 10,
+    "model_hits": 5,
+    "model_agreement": 0.5
+  },
+  "model_errors": [
+    {
+      "n": 10,
+      "conf": 0.7,
+      "model": "medio_periodismo",
+      "human": "contra_critica"
+    },
+    {
+      "n": 20,
+      "conf": 0.7,
+      "model": "satira_humor",
+      "human": "falso_positivo"
+    },
+    {
+      "n": 2,
+      "conf": 0.75,
+      "model": "contra_critica",
+      "human": "manosfera_sincera"
+    },
+    {
+      "n": 6,
+      "conf": 0.2,
+      "model": "ambiguo",
+      "human": "manosfera_sincera"
+    },
+    {
+      "n": 27,
+      "conf": 0.5,
+      "model": "ambiguo",
+      "human": "manosfera_sincera"
+    }
+  ],
+  "dist_model": {
+    "manosfera_sincera": 8,
+    "contra_critica": 5,
+    "satira_humor": 5,
+    "medio_periodismo": 2,
+    "falso_positivo": 3,
+    "ambiguo": 7
+  },
+  "dist_annotators": [
+    {
+      "manosfera_sincera": 6,
+      "falso_positivo": 10,
+      "satira_humor": 2,
+      "contra_critica": 4
+    },
+    {
+      "manosfera_sincera": 13,
+      "falso_positivo": 5,
+      "satira_humor": 3,
+      "contra_critica": 6,
+      "ambiguo": 2,
+      "medio_periodismo": 1
+    }
+  ]
+}

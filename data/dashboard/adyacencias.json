@@ -1,0 +1,49 @@
+{
+  "corpus": 742,
+  "manosfera_sincera": 259,
+  "ecosistemas": {
+    "apuestas": {
+      "videos_corpus": 0,
+      "videos_sincera": 0,
+      "creadores": 0,
+      "creadores_puente": 0,
+      "plays_puente": 0,
+      "terminos": {}
+    },
+    "trading_cripto": {
+      "videos_corpus": 0,
+      "videos_sincera": 0,
+      "creadores": 0,
+      "creadores_puente": 0,
+      "plays_puente": 0,
+      "terminos": {}
+    },
+    "emprendimiento": {
+      "videos_corpus": 0,
+      "videos_sincera": 0,
+      "creadores": 0,
+      "creadores_puente": 0,
+      "plays_puente": 0,
+      "terminos": {}
+    },
+    "productividad": {
+      "videos_corpus": 57,
+      "videos_sincera": 46,
+      "creadores": 51,
+      "creadores_puente": 40,
+      "plays_puente": 4809675,
+      "terminos": {
+        "sigma": 20,
+        "monk mode": 19,
+        "disciplina": 6,
+        "mindset": 6,
+        "estoico": 4,
+        "grindset": 4,
+        "mentalidad": 3,
+        "estoicismo": 2,
+        "habitos": 1,
+        "dopamina": 1
+      }
+    }
+  }
+}

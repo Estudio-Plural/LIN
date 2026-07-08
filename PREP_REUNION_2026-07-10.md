@@ -19,8 +19,8 @@ bastante mayor.
 | Comparación | Acuerdo | κ (Cohen) | Lectura |
 |---|---|---|---|
 | Humano ↔ Humano (6 clases) | 45% | **0.28** | *fair* — la tarea es ambigua en la frontera |
-| Humano ↔ Humano (binario "sincera vs. resto") | 70% | 0.35 | mejor al simplificar la decisión |
-| Humano ↔ Modelo (6 clases) | 30–36% | 0.12–0.23 | bajo, pero medido en el subconjunto más duro |
+| Humano ↔ Humano (binario "sincera vs. resto") | 73% | 0.43 | mejor al simplificar la decisión |
+| Humano ↔ Modelo (6 clases) | 30–36% | 0.13–0.23 | bajo, pero medido en el subconjunto más duro |
 
 **Los tres mensajes:**
 

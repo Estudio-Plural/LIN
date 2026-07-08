@@ -105,7 +105,7 @@ def main() -> int:
             "terminos": dict(terms_hit[eco].most_common(20)),
         } for eco in LEX},
     }
-    dest = ROOT / "data" / "processed" / "adyacencias_sondeo.json"
+    dest = ROOT / "data" / "dashboard" / "adyacencias.json"
     dest.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\n[ok] resumen → {dest.relative_to(ROOT)}")
     return 0

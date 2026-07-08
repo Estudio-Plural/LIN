@@ -41,9 +41,10 @@ export function Methodology({ meta }: { meta: Meta }) {
           <p>
             Cada video se etiqueta con <code className="text-zinc-300">gemini-2.5-flash</code> (manosfera sincera / contra-crítica /
             sátira / medio / falso positivo / ambiguo) para separar señal de ruido. Es una capa asistida por IA,
-            auditable video por video en el explorador — pero aún <strong className="text-zinc-300">sin validación
-            humana sobre una muestra</strong>, así que el 35% de “señal real” es una estimación del modelo, no una
-            medición con margen de error.
+            auditable video por video en el explorador. La <strong className="text-zinc-300">validación humana está en
+            curso</strong> (ver sección Validación): la Fase 1 anotó a mano la frontera de baja confianza; la Fase 2
+            (~100–150 videos) dará un número reportable. Hasta entonces el 35% de “señal real” es una estimación del
+            modelo, no una medición con margen de error.
           </p>
         </div>
         <p className="border-t border-zinc-800 pt-4 text-xs text-zinc-600">

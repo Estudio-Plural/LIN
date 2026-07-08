@@ -82,6 +82,48 @@ export type GrowthData = {
   creators: { author: string; videos: number; new_plays: number; share_new: number; base_plays: number }[];
 };
 
+export type ValidationData = {
+  n_videos: number;
+  n_annotators: number;
+  frontier_note: string;
+  annotator_labeled: number[];
+  lang_barrier: number;
+  private: number;
+  human_human: {
+    kappa_6class: number | null;
+    agreement_6class: number;
+    n: number;
+    kappa_binary: number | null;
+    agreement_binary: number;
+  };
+  human_model: { annotator: number; kappa: number | null; agreement: number; n: number }[];
+  consensus: { n_both: number; n_consensus: number; model_hits: number; model_agreement: number | null };
+  model_errors: { n: number; conf: number; model: string; human: string }[];
+  dist_model: Record<string, number>;
+  dist_annotators: Record<string, number>[];
+};
+
+export type AdjacencyEco = {
+  videos_corpus: number;
+  videos_sincera: number;
+  creadores: number;
+  creadores_puente: number;
+  plays_puente: number;
+  terminos: Record<string, number>;
+};
+export type AdjacencyData = {
+  corpus: number;
+  manosfera_sincera: number;
+  ecosistemas: Record<string, AdjacencyEco>;
+};
+
+export const ECO_LABELS: Record<string, string> = {
+  productividad: "Productividad / mentalidad",
+  emprendimiento: "Emprendimiento / dinero",
+  trading_cripto: "Trading / cripto",
+  apuestas: "Apuestas",
+};
+
 // Orden de etiquetas para barras señal→ruido (señal primero).
 export const LABEL_ORDER = [
   "manosfera_sincera",
