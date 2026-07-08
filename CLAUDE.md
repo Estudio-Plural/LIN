@@ -33,11 +33,14 @@ Dashboard vivo: https://lin-manosfera.vercel.app (proyecto Vercel `lin-manosfera
 Los metadatos OG y el stat "señal real" se generan desde `dashboard/public/data/meta.json`
 en build — basta regenerar datos y redeployar.
 
-## Monitor de crecimiento (ACTIVO desde 2026-06-12)
+## Monitor de crecimiento (PAUSADO desde 2026-07-08 · activo 2026-06-12→07-08)
 
 Mide la curva de vida de videos frescos de creadores manosfera curados.
 
-- Task Apify: `lin-monitor-growth` · Schedule: `lin-monitor-growth-daily` (diario 13:00 UTC, enabled)
+- Task Apify: `lin-monitor-growth` · Schedule: `lin-monitor-growth-daily` (id `T8G7ETTvYOnh5cOpW`,
+  diario 13:00 UTC) — **PAUSADO 2026-07-08** (`is_enabled=False`); el Task y el historial de snapshots
+  siguen intactos (`build_curves_apify` funciona con lo ya capturado). Reactivar:
+  `.venv/bin/python -c "from src.scrape._common import get_client; get_client().schedule('T8G7ETTvYOnh5cOpW').update(is_enabled=True)"`
 - Handles curados: `data/processed/monitor_handles.txt` (12 cuentas, hispanas, sinceras/ambiguas;
   se eliminó una granja de reposteo `#countryboy #hombrealfa` de ~6 cuentas `user...`)
 - Curvas: `python -m src.monitor.build_curves_apify` — lee TODOS los runs del task desde la API
